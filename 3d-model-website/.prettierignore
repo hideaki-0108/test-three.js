@@ -1,0 +1,24 @@
+# Build outputs
+dist/
+build/
+coverage/
+
+# Dependencies
+node_modules/
+
+# Generated files
+*.min.js
+*.min.css
+
+# Config files that should maintain specific formatting
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Assets
+*.svg
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
