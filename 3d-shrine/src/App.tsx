@@ -50,16 +50,15 @@ function App() {
       }
 
       const currentPath = modelPaths[pathIndex];
-      console.log(`Attempting to load: ${currentPath}`);
 
       glbLoader.load(
         currentPath,
         gltf => {
           models = gltf.scene;
           // モデルのサイズを調整
-          models.scale.set(5, 5, 5);
+          models.scale.set(2, 2, 2);
+          models.rotation.y = Math.PI / 2;
           scene.add(models);
-          console.log(`GLB model loaded successfully: ${currentPath}`);
         },
         progress => {
           console.log(
@@ -78,25 +77,23 @@ function App() {
     // モデル読み込み開始
     loadModel();
 
-    // フォールバック用のキューブ（GLBが読み込めない場合）
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    cube.position.set(2, 0, 0); // GLBモデルと重ならないように配置
-    scene.add(cube);
-
     // animation
     const tick = () => {
       renderer.render(scene, camera);
       requestAnimationFrame(tick);
     };
     tick();
+
+    window.addEventListener('wheel', e => {
+      if (models) {
+        camera.position.z += e.deltaY * -0.005;
+      }
+    });
   }, []);
 
   return (
     <>
-      <canvas id="canvas"></canvas>
-      <div className="mainContent">hello world</div>
+      <canvas id="canvas" style={{ width: '100vw', height: '100vh' }}></canvas>
     </>
   );
 }
